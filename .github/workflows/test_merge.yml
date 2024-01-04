@@ -1,0 +1,63 @@
+name: TestAutoMerge(R)
+
+on:
+  workflow_dispatch:
+  pull_request_target:
+    branches: main
+    paths:
+      - 'model-output/**'
+      - '!**README**'
+
+jobs:
+  validate-submission:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      # Get changes from pull request for later use
+      # --------------------------------------------      
+      - name: Get changes
+        id: get_changed_files
+        uses: tj-actions/changed-files@v41
+
+        
+      # DEBUG ONLY
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.get_changed_files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+
+        
+      # Eventually comment on it
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            All validation checks completed successfully.
+          pr_number: ${{ github.event.pull_request.number }}
+
+
+      # Approve pull request 
+      # ---------------------------
+      - name: Approve Pull Request
+        uses: juliangruber/approve-pull-request-action@v2.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+
+      
+      - name: Merge the pull request
+        id: merge_pr
+        run: |
+          gh pr merge --auto --squash $PR_URL
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ github.token }}
+
