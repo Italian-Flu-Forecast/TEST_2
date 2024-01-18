@@ -20,7 +20,7 @@ jobs:
 
       - name: set var val
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh variable list
           # gh variable set TEST_BOOL_VAR --body "false"
