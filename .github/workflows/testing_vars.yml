@@ -20,7 +20,7 @@ jobs:
 
       - name: set var val
         run: |
-          echo "TEST_BOOL_VAR = 'false'" >> "$GITHUB_ENV"
+          echo "TEST_BOOL_VAR = 'false'" >> "$GITHUB_VARS"
 
       - name: trace
         run: |
