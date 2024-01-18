@@ -17,6 +17,8 @@ jobs:
         run: |
            echo "Variable BEFORE Value is ${{ vars.TEST_BOOL_VAR }}"
 
+      - uses: actions/checkout@v3
+
 
       - name: set var val
         env:
