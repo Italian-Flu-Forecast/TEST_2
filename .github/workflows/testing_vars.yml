@@ -15,9 +15,13 @@ jobs:
       # -------------------------------------------      
       - name: trace
         run: |
-           echo "Variable Value is ${{ vars.TEST_BOOL_VAR }}"
+           echo "Variable BEFORE Value is ${{ vars.TEST_BOOL_VAR }}"
 
 
       - name: set var val
         run: |
           echo "TEST_BOOL_VAR = 'false'" >> "$GITHUB_ENV"
+
+      - name: trace
+        run: |
+           echo "Variable AFTER Value is ${{ vars.TEST_BOOL_VAR }}"
