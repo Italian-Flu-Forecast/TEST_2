@@ -17,7 +17,7 @@ jobs:
       # -------------------------------------------      
       - name: trace
         run: |
-           echo "Variable BEFORE Value is ${{ IMPORT_NEEDED }}"
+           echo "Variable BEFORE Value is ${{ env.IMPORT_NEEDED }}"
 
       - uses: actions/checkout@v3
 
@@ -31,4 +31,4 @@ jobs:
           
       - name: trace
         run: |
-           echo "Variable AFTER Value is ${{ IMPORT_NEEDED }}"
+           echo "Variable AFTER Value is ${{ env.IMPORT_NEEDED }}"
