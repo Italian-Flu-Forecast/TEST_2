@@ -7,6 +7,8 @@ on:
 jobs:
   test_job:
     runs-on: ubuntu-latest
+    env:
+      IMPORT_NEEDED: 'true'
     
     steps:
 
@@ -15,7 +17,7 @@ jobs:
       # -------------------------------------------      
       - name: trace
         run: |
-           echo "Variable BEFORE Value is ${{ vars.TEST_BOOL_VAR }}"
+           echo "Variable BEFORE Value is ${{ IMPORT_NEEDED }}"
 
       - uses: actions/checkout@v3
 
@@ -24,9 +26,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh variable list
-          # gh variable set TEST_BOOL_VAR --body "false"
+          echo "IMPORT_NEEDED='false'" >> $GITHUB_ENV
 
+          
       - name: trace
         run: |
-           echo "Variable AFTER Value is ${{ vars.TEST_BOOL_VAR }}"
+           echo "Variable AFTER Value is ${{ IMPORT_NEEDED }}"
