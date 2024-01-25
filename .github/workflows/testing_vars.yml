@@ -7,28 +7,23 @@ on:
 jobs:
   test_job:
     runs-on: ubuntu-latest
-    env:
-      IMPORT_NEEDED: 'true'
-    
+
     steps:
 
       # Checkout the python tools repo
       # used to authenticate and validate the PR
       # -------------------------------------------      
-      - name: trace
+      - name: format scoring 
+        id: format_scoring_output
         run: |
-           echo "Variable BEFORE Value is ${{ env.IMPORT_NEEDED }}"
+           echo "scoring_file_latest='model-evaluation/latest_forecast_scores.csv'" >> $GITHUB_OUTPUT
+           echo "scoring_file_snapshot='model-evaluation/snapshots/2024-01-17-forecast_scores.csv'" >> $GITHUB_OUTPUT
 
-      - uses: actions/checkout@v3
 
-
-      - name: set var val
+      # Save changes to artifact for later persisting 
+      - name: Save changes to artifact
         env:
-          GH_TOKEN: ${{ github.token }}
+          changed_files: ${{ steps.format_scoring_output.outputs.scoring_file_latest }} ${{ steps.format_scoring_output.outputs.scoring_file_snapshot }}
         run: |
-          echo "IMPORT_NEEDED='false'" >> $GITHUB_ENV
-
+          echo "Changes: \"$changed_files\" " 
           
-      - name: trace
-        run: |
-           echo "Variable AFTER Value is ${{ env.IMPORT_NEEDED }}"
