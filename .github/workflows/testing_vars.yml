@@ -8,22 +8,28 @@ jobs:
   test_job:
     runs-on: ubuntu-latest
 
+    env: 
+      run_update: 'true'
+
     steps:
+
+      - name: trace var value
+        run: echo " Run update var value ${{ run_update }}"
 
       # Checkout the python tools repo
       # used to authenticate and validate the PR
       # -------------------------------------------      
-      - name: format scoring 
-        id: format_scoring_output
-        run: |
-           echo "scoring_file_latest='model-evaluation/latest_forecast_scores.csv'" >> $GITHUB_OUTPUT
-           echo "scoring_file_snapshot='model-evaluation/snapshots/2024-01-17-forecast_scores.csv'" >> $GITHUB_OUTPUT
+      # - name: format scoring 
+      #   id: format_scoring_output
+      #   run: |
+      #      echo "scoring_file_latest='model-evaluation/latest_forecast_scores.csv'" >> $GITHUB_OUTPUT
+      #      echo "scoring_file_snapshot='model-evaluation/snapshots/2024-01-17-forecast_scores.csv'" >> $GITHUB_OUTPUT
 
 
       # Save changes to artifact for later persisting 
-      - name: Save changes to artifact
-        env:
-          changed_files: ${{ steps.format_scoring_output.outputs.scoring_file_latest }} ${{ steps.format_scoring_output.outputs.scoring_file_snapshot }}
-        run: |
-          echo "Changes: \"$changed_files\" " 
+      # - name: Save changes to artifact
+      #   env:
+      #     changed_files: ${{ steps.format_scoring_output.outputs.scoring_file_latest }} ${{ steps.format_scoring_output.outputs.scoring_file_snapshot }}
+      #   run: |
+      #     echo "Changes: \"$changed_files\" " 
           
