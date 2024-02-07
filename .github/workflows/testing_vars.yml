@@ -14,7 +14,7 @@ jobs:
     steps:
 
       - name: trace var value
-        run: echo " Run update var value ${{ run_update }}"
+        run: echo " Run update var value ${{ env.run_update }}"
 
       # Checkout the python tools repo
       # used to authenticate and validate the PR
