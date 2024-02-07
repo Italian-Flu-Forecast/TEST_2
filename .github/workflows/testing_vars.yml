@@ -49,10 +49,10 @@ jobs:
           
         run: |          
           # python ./tools/code/check_target_uptodate.py --repository "./repo"
-          echo "run_update=$(python ./tools/code/check_target_uptodate.py --repository './repo')">> GITHUB_ENV
-          # export RUN_UPD=$(python ./tools/code/check_target_uptodate.py --repository "./repo")
-          # echo "RES: "
-          # echo $RUN_UPD
+          # echo "run_update=$(python ./tools/code/check_target_uptodate.py --repository './repo')">> GITHUB_ENV
+          export RUN_UPD=$(python ./tools/code/check_target_uptodate.py --repository "./repo")
+          echo "RES: "
+          echo $RUN_UPD
           echo "Job Done" 
 
       - name: trace var value - after
