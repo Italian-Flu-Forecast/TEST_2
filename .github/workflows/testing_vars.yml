@@ -32,7 +32,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: 'Testing-Forecast-Actions/TEST_2'
-          ref: 'main'
+          ref: 'master'
           path: './repo/'
 
       # Run Pyton code
