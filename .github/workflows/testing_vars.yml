@@ -46,10 +46,11 @@ jobs:
       - name: change var value
         env: 
           disease_name: "Influenza"
+          run_test: ""
           
         run: |          
           # python ./tools/code/check_target_uptodate.py --repository "./repo"
-          echo "run_test=$(python ./tools/code/check_target_uptodate.py --repository \"./repo\")" >> GITHUB_ENV
+          $run_test=python ./tools/code/check_target_uptodate.py --repository \"./repo\")
           echo "Job Done" 
 
       - name: trace var value - after
