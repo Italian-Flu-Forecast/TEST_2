@@ -50,7 +50,7 @@ jobs:
           
         run: |          
           # python ./tools/code/check_target_uptodate.py --repository "./repo"
-          $run_test=python ./tools/code/check_target_uptodate.py --repository \"./repo\")
+          $run_test=python ./tools/code/check_target_uptodate.py --repository "./repo"
           echo "Job Done" 
 
       - name: trace var value - after
