@@ -38,6 +38,7 @@ jobs:
           disease_name: "Influenza"
           
         run: |
+          python ./tools/code/check_target_uptodate.py --repository "./repo"
           echo "run_update='false'" >> $GITHUB_ENV
 
 
