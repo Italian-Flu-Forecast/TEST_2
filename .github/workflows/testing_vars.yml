@@ -16,6 +16,14 @@ jobs:
       - name: trace var value
         run: echo " Run update var value ${{ env.run_update }}"
 
+      - name: change var value
+        run: echo "run_update='false'" >> $GITHUB_ENV
+
+
+      - name: trace var value - after
+        run: echo " Run update var value ${{ env.run_update }}"
+
+
       # Checkout the python tools repo
       # used to authenticate and validate the PR
       # -------------------------------------------      
