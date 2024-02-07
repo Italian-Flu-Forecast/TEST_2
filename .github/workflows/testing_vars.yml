@@ -47,9 +47,8 @@ jobs:
         env: 
           disease_name: "Influenza"
           
-        run: |
-          python ./tools/code/check_target_uptodate.py --repository "./repo"
-          echo "run_update='false'" >> $GITHUB_ENV
+        run: |          
+          echo "run_update=${{ python ./tools/code/check_target_uptodate.py --repository "./repo" }}" >> $GITHUB_ENV
 
 
       - name: trace var value - after
