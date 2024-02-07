@@ -48,7 +48,7 @@ jobs:
           disease_name: "Influenza"
           
         run: |          
-          echo "run_update="$(python ./tools/code/check_target_uptodate.py --repository "./repo")">> GITHUB_ENV
+          echo "run_update="$(python ./tools/code/check_target_uptodate.py --repository './repo')">> GITHUB_ENV
           # export RUN_UPD=$(python ./tools/code/check_target_uptodate.py --repository "./repo")
           # echo "RES: "
           # echo $RUN_UPD
