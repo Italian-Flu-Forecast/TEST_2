@@ -25,6 +25,16 @@ jobs:
           ref: 'main'
           path: './tools/'
 
+      # Checkout the data repository
+      # -------------------------------------------      
+      - name: checkout data repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'Testing-Forecast-Actions/TEST_2'
+          ref: 'main'
+          path: './repo/'
+
       # Run Pyton code
       # -------------------------
       - uses: actions/setup-python@v4
