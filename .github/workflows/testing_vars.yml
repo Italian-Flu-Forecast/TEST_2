@@ -3,7 +3,6 @@ on:
   workflow_dispatch:
 
 
-
 jobs:
   test_job:
     runs-on: ubuntu-latest
@@ -16,8 +15,30 @@ jobs:
       - name: trace var value
         run: echo " Run update var value ${{ env.run_update }}"
 
+      # Checkout the python tools repo
+      # -------------------------------------------      
+      - name: checkout python tools repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'european-modelling-hubs/hub-tools'
+          ref: 'main'
+          path: './tools/'
+
+      # Run Pyton code
+      # -------------------------
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+    
+      - run: pip install pycountry isoweek
+
       - name: change var value
-        run: echo "run_update='false'" >> $GITHUB_ENV
+        env: 
+          disease_name: "Influenza"
+          
+        run: |
+          echo "run_update='false'" >> $GITHUB_ENV
 
 
       - name: trace var value - after
