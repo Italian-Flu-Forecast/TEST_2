@@ -60,7 +60,7 @@ jobs:
 
 
       - name: job failure
-        run: exit 1
+        run: python ./repo/.github/code/testing_code.py
 
       - name: after failure
         run: echo "this step should not be reached after failure"
