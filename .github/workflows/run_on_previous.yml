@@ -1,0 +1,22 @@
+name: Persist Forecasts and meta-data changes to json
+
+on:
+  workflow_run:
+    workflows: [Scoring]
+      
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+
+  run_on_success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+
+
+    - name: Trace starting
+      id: trace_success
+      run: echo "Run on successfull wf" 
