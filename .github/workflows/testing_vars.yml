@@ -60,7 +60,10 @@ jobs:
 
 
       - name: job failure
-        run: python ./repo/.github/code/testing_code.py
+        # run: python ./repo/.github/code/testing_code.py
+        run: |
+          echo "running failure directly from wf step"
+          exit(1)
 
       - name: after failure
         run: echo "this step should not be reached after failure"
