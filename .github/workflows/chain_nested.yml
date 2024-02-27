@@ -1,4 +1,4 @@
-name: ChainD
+name: ChainNested
 
 on:
   workflow_call:
