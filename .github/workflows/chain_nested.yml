@@ -1,0 +1,25 @@
+name: ChainD
+
+on:
+  workflow_call:
+  
+    # inputs:    
+    #   # test only
+    #   changes-list:
+    #     required: true
+    #     type: string
+
+    # secrets:
+    #   # pass in the GITHUB_TOKEN    
+    #   envPAT:
+    #     required: true
+
+
+    
+jobs:
+
+  nested_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trace starting
+        run: echo "Running nested WF" 
