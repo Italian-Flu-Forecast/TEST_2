@@ -1,0 +1,18 @@
+name: ChainD
+
+on:
+  workflow_run:
+    workflows: [ChainC]
+      
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+
+  run_on_success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trace starting
+        run: echo "Running chain D" 
