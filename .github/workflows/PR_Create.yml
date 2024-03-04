@@ -21,8 +21,6 @@
             # ref: 'master'
             # path: './repo/'
 
-        - name: change branch
-          run: git checkout -b my-branch
         - name: wget
           uses: wei/wget@v1
           with:
@@ -43,6 +41,7 @@
             # author_name: PMi74
             # author_email: paolo.milano@gmail.com
             message: 'Testing commit'
+            new_branch: my-branch
             # add: '*.csv'
 
             
