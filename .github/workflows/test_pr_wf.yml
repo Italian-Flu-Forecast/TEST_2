@@ -1,0 +1,49 @@
+  name: TestPrWf
+
+  on:
+    workflow_dispatch:
+
+
+  jobs:
+    test_job:
+      runs-on: ubuntu-latest
+
+
+      steps:
+        - name: trace step
+          run: echo "Tracing test step"
+
+
+      # Checkout the data repository
+      # -------------------------------------------
+      - name: checkout data repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'Testing-Forecast-Actions/TEST_2'
+          ref: 'master'
+          path: './repo/'
+
+
+
+      - name: get a remote file
+        run: |
+          echo "Getting remote file"
+          wget ‐‐directory-prefix=./repo/ http://example.com/file.iso
+
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: PMi74
+          author_email: paolo.milano@gmail.com
+          message: 'Testing commit'
+          add: './repo/*.iso'
+
+
+      -name: Open the pull requests
+        run: |
+          echo "Opening PR"
+          gh pr create -B master --title 'Test merge' --body 'Created by Github action'
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
