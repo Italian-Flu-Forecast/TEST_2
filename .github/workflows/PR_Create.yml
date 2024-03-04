@@ -16,14 +16,15 @@
           uses: actions/checkout@v3
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
-            repository: 'Testing-Forecast-Actions/TEST_2'
-            ref: 'master'
-            path: './repo/'
+            # repository: 'Testing-Forecast-Actions/TEST_2'
+            # ref: 'master'
+            # path: './repo/'
 
         - name: wget
           uses: wei/wget@v1
           with:
-            args: -P ./repo -O pippo.csv google.com
+            args: -O pippo.csv google.com
+            # args: -P ./repo -O pippo.csv google.com
 
         # - name: get a remote file
         #   run: |
@@ -35,16 +36,17 @@
         - name: Commit changes
           uses: EndBug/add-and-commit@v9
           with:
-            cwd: './repo'
+            # cwd: './repo'
             # author_name: PMi74
             # author_email: paolo.milano@gmail.com
             message: 'Testing commit'
-            add: '*.csv'
+            # add: '*.csv'
 
             
         - name: Create Pull Request
           id: cpr
           uses: peter-evans/create-pull-request@v3
+          
         - name: Check outputs
           run: |
             echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
