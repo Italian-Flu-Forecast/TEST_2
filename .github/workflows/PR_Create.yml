@@ -35,10 +35,11 @@
         - name: Commit changes
           uses: EndBug/add-and-commit@v9
           with:
-            author_name: PMi74
-            author_email: paolo.milano@gmail.com
+            cwd: './repo'
+            # author_name: PMi74
+            # author_email: paolo.milano@gmail.com
             message: 'Testing commit'
-            add: './repo/*.iso'
+            add: '*.csv'
   
   
         - name: Open the pull requests
