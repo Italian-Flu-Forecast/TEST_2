@@ -40,11 +40,19 @@
             # author_email: paolo.milano@gmail.com
             message: 'Testing commit'
             add: '*.csv'
-  
-  
-        - name: Open the pull requests
+
+            
+        - name: Create Pull Request
+          id: cpr
+          uses: peter-evans/create-pull-request@v3
+        - name: Check outputs
           run: |
-            echo "Opening PR"
-            gh pr create -B master --title 'Test merge' --body 'Created by Github action'
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+            echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+  
+        # - name: Open the pull requests
+        #   run: |
+        #     echo "Opening PR"
+        #     gh pr create -B master --title 'Test merge' --body 'Created by Github action'
+        #   env:
+        #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
