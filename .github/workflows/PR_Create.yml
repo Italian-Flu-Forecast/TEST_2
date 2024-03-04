@@ -25,7 +25,8 @@
         - name: get a remote file
           run: |
             echo "Getting remote file"
-            wget ‐‐directory-prefix=./repo/ https://xmart-api-public.who.int/FLUMART/VIW_FID?$format=csv
+            # wget ‐‐directory-prefix=./repo/ -O pippo.csv https://xmart-api-public.who.int/FLUMART/VIW_FID?$format=csv
+            wget ‐‐directory-prefix=./repo/ -O pippo.csv google.com
   
   
         - name: Commit changes
