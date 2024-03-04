@@ -25,7 +25,7 @@
         - name: get a remote file
           run: |
             echo "Getting remote file"
-            wget ‐‐directory-prefix=./repo/ http://example.com/file.iso
+            wget ‐‐directory-prefix=./repo/ https://xmart-api-public.who.int/FLUMART/VIW_FID?$format=csv
   
   
         - name: Commit changes
