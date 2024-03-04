@@ -14,7 +14,8 @@
         # -------------------------------------------
         - name: checkout data repo
           uses: actions/checkout@v3
-          with:
+          with:          
+            ref: my-branch
             token: ${{ secrets.GITHUB_TOKEN }}
             # repository: 'Testing-Forecast-Actions/TEST_2'
             # ref: 'master'
@@ -55,6 +56,6 @@
         - name: Open the pull requests
           run: |
             echo "Opening PR"
-            gh pr create -B master --title 'Test merge' --body 'Created by Github action'
+            gh pr create -B master -H my-branch --title 'Test merge' --body 'Created by Github action'
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
