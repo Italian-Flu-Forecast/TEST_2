@@ -48,6 +48,8 @@
               
 
         - run: |
+            git config --local user.email "formazione.croceverdecirie@gmail.com"
+            git config --local user.name "Chappi74"
             git checkout -b my-branch
             git add --all
             git commit -m "Commit comment"
