@@ -37,6 +37,9 @@
             git checkout master
             gh repo sync Chappi74/TEST_2 -b master
             git pull
+            git config --local user.email "formazione.croceverdecirie@gmail.com"
+            git config --local user.name "Chappi74"
+            git checkout -b my-branch1
             
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,12 +51,9 @@
               
 
         - run: |
-            git config --local user.email "formazione.croceverdecirie@gmail.com"
-            git config --local user.name "Chappi74"
-            git checkout -b my-branch
             git add --all
             git commit -m "Commit comment"
-            git push -u origin my-branch 
+            git push -u origin my-branch1 
             # git push
   
         # - name: Commit changes
