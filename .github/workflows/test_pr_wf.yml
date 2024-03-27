@@ -46,12 +46,17 @@
           with:
             args: -O test.csv google.com
               
+
+        - run: |
+            git checkout -b my-branch
+            git add --all
+            git commit -m "Commit comment"
   
-        - name: Commit changes
-          uses: EndBug/add-and-commit@v9
-          with:  
-            message: 'Testing commit'
-            new_branch: my-branch
+        # - name: Commit changes
+        #   uses: EndBug/add-and-commit@v9
+        #   with:  
+        #     message: 'Testing commit'
+        #     new_branch: my-branch
         
         - name: Open the pull requests
           run: |
