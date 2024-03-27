@@ -35,7 +35,7 @@
               
         - run: |
             git checkout master
-            gh repo sync Chappi74/TEST_2 -b master
+            gh repo sync Chappi74/MyTESTRepo -b master
             git pull
             git config --local user.email "formazione.croceverdecirie@gmail.com"
             git config --local user.name "Chappi74"
