@@ -30,10 +30,16 @@
             token: ${{ secrets.GITHUB_TOKEN }}  
 
         - run: gh repo set-default Testing-Forecast-Actions/TEST_2
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              
         - run: |
             git checkout main
             gh repo sync Chappi74/TEST_2 -b master
             git pull
+            
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         - name: wget
           uses: wei/wget@v1
