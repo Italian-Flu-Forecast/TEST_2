@@ -29,6 +29,11 @@
           with:          
             token: ${{ secrets.GITHUB_TOKEN }}  
 
+        - run: gh repo set-default Testing-Forecast-Actions/TEST_2
+        - run: |
+            git checkout main
+            gh repo sync Chappi74/TEST_2 -b master
+            git pull
 
         - name: wget
           uses: wei/wget@v1
