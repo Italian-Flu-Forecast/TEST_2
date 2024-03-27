@@ -1,0 +1,133 @@
+name: GenerateModelOutput 
+
+# This example workflow is meant to depict steps needed to run R or Python code 
+# from a tools repository saving the output data to another data repository 
+# A good starting point for a better understandig of how GitHub actions work
+# is this: https://docs.github.com/en/actions/quickstart
+
+
+# Firts step is to define di events that can trigger this workflow
+on:
+
+  # You can trigger the workflow at a scheduled time 
+  schedule:
+    # runnit it every friday at 6.00 pm
+    - cron: "00 18 * * 5"
+
+  
+  # Or you can manually trigger the workflow
+  workflow_dispatch:
+
+
+# then you need to define the flow of your jon step by step    
+jobs:
+
+  # here we need a single job, running on a standard Ubuntu virtual machine
+  main_job:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository_owner == 'european-modelling-hubs' }}
+    outputs:
+      changed_files:  ${{ steps.compute_baseline.outputs.baseline_file }}  
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    # Checkout the GitHub tools repo where R o Python 
+    # scripts used to run your model resides
+    # In this example tools repo is https://github.com/your_organization/tools-repo  
+    # --------------------------------------------------------------------------------      
+    - name: checkout tools repo
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: 'your_organization/tools-repo'
+        ref: 'main'  # the git branch to work on
+        path: './tools/'  # Relative path under $GITHUB_WORKSPACE to place the repository
+
+    # Checkout the model data repository
+    # This is the repository where your sw will save the model output data  
+    # In this example data repo is https://github.com/your_organization/data-repo  
+    # -----------------------------------------------------------------------------      
+    - name: checkout data repo
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: 'your_organization/data-repo'
+        ref: 'main' # the git branch to work on
+        path: './repo/' # Relative path under $GITHUB_WORKSPACE to place the repository
+
+    
+    # Set up the Python environment, installing version 3.10
+    # and Pandas 1.2.5 and Numpy 1.22.4 dependencies
+    # ---------------------------------------------------------
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' 
+    
+    # And eventually install needed packages
+    - run: pip install pandas==1.2.5 numpy==1.22.4
+
+    # Now you can run your python code from tools repo
+    - name: do the Python stuff 
+      id: do_python_stuff
+      run: |
+        python ./tools/code/python_stuff.py
+
+
+    # Or you can set up an R environment, with needed dependencies
+    # e.g. some std or GitHub hosted package 
+    # ---------------------------------------------------------
+    - uses: r-lib/actions/setup-r@v2
+      with:
+        install-r: false
+        use-public-rspm: true
+        
+    - name: Installing dependencies
+      run: |
+        install.packages("remotes")
+        remotes::install_github("Infectious-Disease-Modeling-Hubs/hubData")
+        remotes::install_github("Infectious-Disease-Modeling-Hubs/hubEnsembles")
+        install.packages("dplyr")
+        install.packages("jsonlite")
+        install.packages("optparse")
+        install.packages("purrr")
+      shell: Rscript {0}
+
+    - name: Generate Ensemble
+      id: generate_ensemble
+      run: |
+        # call R script from tools
+        Rscript ./tools/R-code/generate-ensemble.R --hub_path "./repo" --agg_fun "median" --model_id "hubEnsemble" --team_id "respicast"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    - name: Commit data repo changes
+      uses: EndBug/add-and-commit@v7
+      with: 
+          cwd: './repo'
+          message: "Update data storage"
+          default_author: github_actions
+          push: true
+
+
+  call-persisting-wf:
+    needs: baseline_job
+    uses: european-modelling-hubs/flu-forecast-hub/.github/workflows/persist_changes.yml@main
+    with:
+      changes-list: ${{ needs.baseline_job.outputs.changed_files }}
+
+    secrets:
+      envPAT: ${{ secrets.GITHUB_TOKEN }}      
