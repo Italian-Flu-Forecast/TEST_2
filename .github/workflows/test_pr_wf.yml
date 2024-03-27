@@ -63,6 +63,6 @@
         - name: Open the pull requests
           run: |
             echo "Opening PR"
-            gh pr create --title 'Test merge' --body 'Created by Github action'
+            gh pr create --title 'Test merge' --body 'Created by Github action' --head ${{ github.run_id }}-${{ github.run_attempt }}
           env:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
