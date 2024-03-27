@@ -54,6 +54,7 @@
             git add --all
             git commit -m "Commit comment"
             git push -u origin my-branch1 
+            gh pr create
             # git push
   
         # - name: Commit changes
