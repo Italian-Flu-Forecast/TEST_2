@@ -44,6 +44,8 @@ jobs:
         ref: 'main'  # the git branch to work on
         path: './tools/'  # Relative path under $GITHUB_WORKSPACE to place the repository
 
+
+
     # Checkout the model data repository
     # This is the repository where your sw will save the model output data  
     # In this example data repo is https://github.com/your_organization/data-repo  
@@ -65,18 +67,22 @@ jobs:
         python-version: '3.10' 
     
     # And eventually install needed packages
+    # ---------------------------------------------------------
     - run: pip install pandas==1.2.5 numpy==1.22.4
 
-    # Now you can run your python code from tools repo
+    # Now you can run your python script from "code" folder under tools repo
+    # The --hub_path parameter is passed so that you can use it inside your script  
+    # to write the output into the data-repo
+    # --------------------------------------------------------------------------
     - name: do the Python stuff 
       id: do_python_stuff
       run: |
-        python ./tools/code/python_stuff.py
+        python ./tools/code/python_stuff.py  --hub_path "./repo"  
 
 
     # Or you can set up an R environment, with needed dependencies
-    # e.g. some std or GitHub hosted package 
-    # ---------------------------------------------------------
+    # e.g. some GitHub hosted package or "jsonlite" package
+    # ----------------------------------------------------------------
     - uses: r-lib/actions/setup-r@v2
       with:
         install-r: false
@@ -85,35 +91,23 @@ jobs:
     - name: Installing dependencies
       run: |
         install.packages("remotes")
-        remotes::install_github("Infectious-Disease-Modeling-Hubs/hubData")
-        remotes::install_github("Infectious-Disease-Modeling-Hubs/hubEnsembles")
-        install.packages("dplyr")
+        remotes::install_github("some-github-hosted-package")
         install.packages("jsonlite")
-        install.packages("optparse")
-        install.packages("purrr")
       shell: Rscript {0}
 
-    - name: Generate Ensemble
-      id: generate_ensemble
+    # Now you can run your R script from "R-code" folder under tools repo
+    # The --hub_path parameter is passed so that you can use it inside your script  
+    # to write the output into the data-repo
+    # --------------------------------------------------------------------
+    - name: do the R stuff
+      id: do_R_stuff
       run: |
         # call R script from tools
-        Rscript ./tools/R-code/generate-ensemble.R --hub_path "./repo" --agg_fun "median" --model_id "hubEnsemble" --team_id "respicast"
+        Rscript ./tools/R-code/r-suff.R  --hub_path "./repo"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+    # Finally, when you are done with your model processign, 
+    # commit changes to the data-repo 
     - name: Commit data repo changes
       uses: EndBug/add-and-commit@v7
       with: 
@@ -121,13 +115,3 @@ jobs:
           message: "Update data storage"
           default_author: github_actions
           push: true
-
-
-  call-persisting-wf:
-    needs: baseline_job
-    uses: european-modelling-hubs/flu-forecast-hub/.github/workflows/persist_changes.yml@main
-    with:
-      changes-list: ${{ needs.baseline_job.outputs.changed_files }}
-
-    secrets:
-      envPAT: ${{ secrets.GITHUB_TOKEN }}      
