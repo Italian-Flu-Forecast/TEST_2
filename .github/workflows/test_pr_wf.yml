@@ -53,7 +53,7 @@
             git checkout -b my-branch
             git add --all
             git commit -m "Commit comment"
-            git push -u origin head 
+            git push -u origin my-branch 
             # git push
   
         # - name: Commit changes
