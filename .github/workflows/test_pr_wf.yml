@@ -16,31 +16,32 @@
 
         # Checkout the data repository
         # -------------------------------------------
+        # - name: checkout data repo
+        #   uses: actions/checkout@v3
+        #   with:
+        #     token: ${{ secrets.GITHUB_TOKEN }}
+        #     repository: 'Testing-Forecast-Actions/TEST_2'
+        #     ref: 'master'
+        #     path: './repo/'
+  
         - name: checkout data repo
           uses: actions/checkout@v3
+          with:          
+            token: ${{ secrets.GITHUB_TOKEN }}  
+
+
+        - name: wget
+          uses: wei/wget@v1
           with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            repository: 'Testing-Forecast-Actions/TEST_2'
-            ref: 'master'
-            path: './repo/'
-  
-  
-  
-        - name: get a remote file
-          run: |
-            echo "Getting remote file"
-            wget ‐‐directory-prefix=./repo/ http://example.com/file.iso
-  
+            args: -O test.csv google.com
+              
   
         - name: Commit changes
           uses: EndBug/add-and-commit@v9
-          with:
-            author_name: PMi74
-            author_email: paolo.milano@gmail.com
+          with:  
             message: 'Testing commit'
-            add: './repo/*.iso'
-  
-  
+            new_branch: my-branch
+        
         - name: Open the pull requests
           run: |
             echo "Opening PR"
