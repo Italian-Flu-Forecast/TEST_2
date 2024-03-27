@@ -41,7 +41,7 @@
             add: './repo/*.iso'
   
   
-        -name: Open the pull requests
+        - name: Open the pull requests
           run: |
             echo "Opening PR"
             gh pr create -B master --title 'Test merge' --body 'Created by Github action'
