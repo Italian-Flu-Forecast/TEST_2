@@ -1,0 +1,68 @@
+  name: CreatePullRequest
+  
+  # This example workflow is meant to depict steps needed get the model-output data  
+  # from a data repository and open a pull request to upload data to a forked hub-repository
+  # A good starting point for a better understandig of how GitHub actions work
+  # is this: https://docs.github.com/en/actions/quickstart
+
+  # This workflow should be placed under the .github/workflows folder of you forked 
+  
+  # Firts step is to define di events that can trigger this workflow
+  on:
+
+    # Run upon previous GenerateModelOutput completion
+    workflow_run:
+      workflows: [GenerateModelOutput]
+      
+      types:
+        - completed
+
+    # Or you can manually trigger the workflow
+    workflow_dispatch:
+    
+  jobs:
+    test_job:
+      runs-on: ubuntu-latest
+
+      
+      steps:
+
+        # Checkout the forked repository - default (master) branch -  
+        # where this action is currently hosted  
+        # ---------------------------------------------------
+        - name: checkout data repo
+          uses: actions/checkout@v3
+          with:          
+            token: ${{ secrets.GITHUB_TOKEN }}
+      
+        # Checkout the model data repository
+        # This is the repository where previous wf saved the model output data  
+        # In this example data repo is https://github.com/your_organization/data-repo  
+        # -----------------------------------------------------------------------------      
+        - name: checkout data repo
+          uses: actions/checkout@v3
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            repository: 'your_organization/data-repo'
+            ref: 'main' # the git branch to work on
+            path: './repo/' # Relative path under $GITHUB_WORKSPACE to place the repository
+
+
+        # call a simple bash script from  that makes a copy of the needed files from source repo to 
+        - name: Copy model-output file
+          run: bash ./.github/scripts/copy-modeloutput-file.sh ./repo/path ./localpath
+
+        # commit change to a new brach! This step is needed in order 
+        # to succesfully open the subsequent pull request 
+        - name: Commit changes
+          uses: EndBug/add-and-commit@v9
+          with:
+            message: 'The commit message'
+            new_branch: my-branch
+            add: './localpath'
+
+        # Finally, open the pull request to the default (master) branch  
+        - name: Open the pull requests
+          run: gh pr create -B master -H my-branch --title 'Title for PR ' --body 'The PR body message'
+          env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
