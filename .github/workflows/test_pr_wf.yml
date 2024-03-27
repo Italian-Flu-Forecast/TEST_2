@@ -62,9 +62,9 @@
         #     message: 'Testing commit'
         #     new_branch: my-branch
         
-        - name: Open the pull requests
-          run: |
-            echo "Opening PR"
-            gh pr create --title 'Test merge' --body 'Created by Github action' 
-          env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # - name: Open the pull requests
+        #   run: |
+        #     echo "Opening PR"
+        #     gh pr create --title 'Test merge' --body 'Created by Github action' 
+        #   env:
+        #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
