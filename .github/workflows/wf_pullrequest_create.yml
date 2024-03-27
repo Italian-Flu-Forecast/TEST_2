@@ -21,7 +21,7 @@
     workflow_dispatch:
     
   jobs:
-    test_job:
+    create_PR_job:
       runs-on: ubuntu-latest
 
       
@@ -48,7 +48,7 @@
             path: './repo/' # Relative path under $GITHUB_WORKSPACE to place the repository
 
 
-        # call a simple bash script from  that makes a copy of the needed files from source repo to 
+        # call a simple bash script that makes a copy of the needed files from source repo to local fork
         - name: Copy model-output file
           run: bash ./.github/scripts/copy-modeloutput-file.sh ./repo/path ./localpath
 
