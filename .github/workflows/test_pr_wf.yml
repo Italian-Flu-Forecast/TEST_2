@@ -7,9 +7,7 @@
   jobs:
     test_job:
       runs-on: ubuntu-latest
-      # permissions: write-all
-
-
+      
       steps:
         - name: trace step
           run: echo "Tracing test step"
@@ -38,8 +36,8 @@
             git checkout master
             gh repo sync Chappi74/MyTESTRepo -b master
             git pull
-            git config --global user.email "formazione.croceverdecirie@gmail.com"
-            git config --global user.name "Chappi74"
+            # git config --global user.email "formazione.croceverdecirie@gmail.com"
+            # git config --global user.name "Chappi74"
             git checkout -b my-branch
             
           env:
