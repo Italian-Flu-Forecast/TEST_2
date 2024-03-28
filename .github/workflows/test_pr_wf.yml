@@ -66,7 +66,7 @@
         #     new_branch: my-branch
 
         - name: Open PR
-          run: gh pr create --head  Chappi74:my-branch1  --base master --title 'test' --body 'running test'
+          run: gh pr create --head  Chappi74:my-branch  --base master --title 'test' --body 'running test'
           env:
             GH_TOKEN: ${{ secrets.MY_PAT_SECRET  }}
             # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
