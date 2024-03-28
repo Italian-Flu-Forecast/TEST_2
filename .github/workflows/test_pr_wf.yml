@@ -38,8 +38,8 @@
             git checkout master
             gh repo sync Chappi74/MyTESTRepo -b master
             git pull
-            git config --local user.email "formazione.croceverdecirie@gmail.com"
-            git config --local user.name "Chappi74"
+            git config --global user.email "formazione.croceverdecirie@gmail.com"
+            git config --global user.name "Chappi74"
             git checkout -b my-branch
             
           env:
