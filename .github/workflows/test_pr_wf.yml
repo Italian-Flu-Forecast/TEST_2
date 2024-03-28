@@ -51,21 +51,19 @@
             args: -O test.csv google.com
               
 
-        # - run: |
-        #     git add --all
-        #     git commit -m "Commit comment"
-        #     git push -u origin my-branch1 
-        #     gh pr create --head  my-branch1  --base master --title 'test' --body 'running test'
-        #     # git push
+        - run: |
+            git add --all
+            git commit -m "Commit comment"
+            git push -u origin my-branch1 
 
         #   env:
         #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
-        - name: Commit changes
-          uses: EndBug/add-and-commit@v9
-          with:  
-            message: 'Testing commit'
-            new_branch: my-branch
+        # - name: Commit changes
+        #   uses: EndBug/add-and-commit@v9
+        #   with:  
+        #     message: 'Testing commit'
+        #     new_branch: my-branch
 
         - name: Open PR
           run: gh pr create --head  Chappi74:my-branch1  --base master --title 'test' --body 'running test'
