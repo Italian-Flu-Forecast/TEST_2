@@ -54,7 +54,7 @@
             git add --all
             git commit -m "Commit comment"
             git push -u origin my-branch1 
-            gh pr create
+            gh pr create --title 'test' --body 'running test'
             # git push
 
           env:
