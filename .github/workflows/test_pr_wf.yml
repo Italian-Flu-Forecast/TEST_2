@@ -70,7 +70,8 @@
         - name: Open PR
           run: gh pr create --head  Chappi74:my-branch1  --base master --title 'test' --body 'running test'
           env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ github.token }}
+            # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
         # - name: Open the pull requests
         #   run: |
