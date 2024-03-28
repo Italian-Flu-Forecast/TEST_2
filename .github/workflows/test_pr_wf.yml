@@ -54,7 +54,7 @@
         - run: |
             git add --all
             git commit -m "Commit comment"
-            git push -u origin my-branch1 
+            git push -u origin my-branch
 
         #   env:
         #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
